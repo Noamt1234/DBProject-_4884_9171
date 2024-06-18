@@ -32,15 +32,17 @@ CREATE TABLE Leave (
     LeaveID INT PRIMARY KEY,
     EmployeeID INT,
     LeaveType VARCHAR(50),
+    ReturnDate DATE,
     CONSTRAINT fk_employee_leave FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID)
 );
 
 CREATE TABLE PerformanceReview (
-    ReviewID INT PRIMARY KEY,
+    ReviewID INT,
     EmployeeID INT,
     ReviewerID INT,
     ReviewDate DATE,
     Rating INT,
+    PRIMARY KEY (ReviewID, EmployeeID,ReviewerID),  -- Composite primary key
     CONSTRAINT fk_employee_review FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID),
     CONSTRAINT fk_reviewer_review FOREIGN KEY (ReviewerID) REFERENCES Employee(EmployeeID)
 );

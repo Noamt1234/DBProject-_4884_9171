@@ -4,7 +4,7 @@ Version=1
 
 [Preferences]
 Username=
-Password=2260
+Password=2470
 Database=
 DateFormat=
 CommitCount=0
@@ -13,14 +13,14 @@ InitScript=
 
 [Table]
 Owner=C##RIAHI
-Name=LEAVE
-Count=500
+Name=PERFORMANCEREVIEW
+Count=555
 
 [Record]
-Name=LEAVEID
+Name=REVIEWID
 Type=NUMBER
 Size=
-Data=Sequence(1000)
+Data=Sequence(5000)
 Master=
 
 [Record]
@@ -31,16 +31,23 @@ Data=List(select employeeid from employee)
 Master=
 
 [Record]
-Name=LEAVETYPE
-Type=VARCHAR2
-Size=50
-Data=List('pregnancy', 'Dismissal', 'Sick leave','days off','pension')
+Name=REVIEWERID
+Type=NUMBER
+Size=
+Data=List(select employeeid from employee)
 Master=
 
 [Record]
-Name=RETURNDATE
+Name=REVIEWDATE
 Type=DATE
 Size=
-Data=Random(00/01/2020, 29/12/2024)
+Data=Random(11/09/2001, 07/10/2023)
+Master=
+
+[Record]
+Name=RATING
+Type=NUMBER
+Size=
+Data=Random(1, 5)
 Master=
 
