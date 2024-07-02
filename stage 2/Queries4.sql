@@ -1,11 +1,11 @@
-SELECT e.FirstName, e.LastName, 
-       (SELECT DepartmentID 
-        FROM Position 
-        WHERE PositionID = e.PositionID) AS DepartmentID
+SELECT e.LastName, e.FirstName, 
+       (SELECT p.DepartmentID 
+        FROM Position p 
+        WHERE p.PositionID = e.PositionID) AS DepartmentID
 FROM Employee e
-WHERE e.PositionID IN (
-    SELECT PositionID
-    FROM PerformanceReview
-    WHERE ReviewerID = e.EmployeeID
+WHERE e.EmployeeID IN (
+    SELECT pr.ReviewerID
+    FROM PerformanceReview pr
+    WHERE pr.ReviewerID = e.EmployeeID
 )
 ORDER BY e.LastName, e.FirstName, DepartmentID;
