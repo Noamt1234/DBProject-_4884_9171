@@ -8,5 +8,4 @@ WHERE pr.ReviewDate BETWEEN TO_DATE('01-01-2001', 'DD-MM-YYYY') AND TO_DATE('31-
     WHERE pr2.EmployeeID = e.EmployeeID
       AND EXTRACT(MONTH FROM pr2.ReviewDate) = 9
   )
-GROUP BY e.FirstName, e.LastName, pr.ReviewDate, EXTRACT(YEAR FROM pr.ReviewDate)
-ORDER BY ReviewYear, pr.ReviewDate;
+ORDER BY pr.ReviewDate;
