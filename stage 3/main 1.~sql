@@ -1,0 +1,14 @@
+-- Main Program 1: Calculate and Display Average Salary
+DECLARE
+    dept_id INT := 1;
+    avg_salary NUMBER;
+    emp_id INT := 101;
+    new_salary DECIMAL(10, 2) := 75000.00;
+BEGIN
+    avg_salary := GetAverageSalary(dept_id);
+    DBMS_OUTPUT.PUT_LINE('Average Salary: ' || avg_salary);
+
+    UpdateEmployeeSalary(emp_id, new_salary);
+    DBMS_OUTPUT.PUT_LINE('Employee salary updated.');
+END;
+/
