@@ -1,0 +1,125 @@
+--view 1
+CREATE VIEW EmployeeDetails AS
+SELECT 
+    e.EmployeeID,
+    e.FirstName,
+    e.LastName,
+    p.PositionName,
+    p.Salary,
+    d.DepartmentName,
+    ms.SpecialtyName,
+    l.LeaveType,
+    l.ReturnDate,
+    pr.Rating,
+    pr.ReviewDate
+FROM 
+    Employee e
+LEFT JOIN 
+    Position p ON e.PositionID = p.PositionID
+LEFT JOIN 
+    Department d ON p.DepartmentID = d.DepartmentID
+LEFT JOIN 
+    MedicalSpecialty ms ON p.SpecialtyID = ms.SpecialtyID
+LEFT JOIN 
+    Leave l ON e.EmployeeID = l.EmployeeID
+LEFT JOIN 
+    PerformanceReview pr ON e.EmployeeID = pr.EmployeeID;
+
+--query 1.1
+SELECT 
+    EmployeeID,
+    FirstName,
+    LastName,
+    DepartmentName,
+    SpecialtyName,
+    LeaveType,
+    ReturnDate
+FROM 
+    EmployeeDetails
+WHERE 
+    LeaveType IS NOT NULL
+ORDER BY 
+    ReturnDate DESC;
+
+
+--query 1.2
+SELECT 
+    DepartmentName,
+    SpecialtyName,
+    AVG(Salary) AS AverageSalary
+FROM 
+    EmployeeDetails
+GROUP BY 
+    DepartmentName,
+    SpecialtyName
+ORDER BY 
+    AverageSalary DESC;
+    
+--view 2
+CREATE VIEW EmployeeTeamDetails AS
+SELECT 
+    e.EmployeeID,
+    e.FirstName,
+    e.LastName,
+    t.team_ID,
+    t.team_name,
+    t.speciality,
+    d.DepartmentID,
+    d.DepartmentName,
+    d.DateEstablished,
+    mr.maintenance_request_ID,
+    mr.priority,
+    mr.maintenance_request_description,
+    r.report_ID,
+    r.maintenance_report_description,
+    r.report_date,
+    eq.equipment_ID,
+    eq.equipment_name,
+    eq.purchase_date
+FROM 
+    Employee e
+LEFT JOIN 
+    member_of mo ON e.EmployeeID = mo.employee_ID
+LEFT JOIN 
+    team t ON mo.team_ID = t.team_ID
+LEFT JOIN 
+    department d ON t.departmant_ID = d.DepartmentID
+LEFT JOIN 
+    maintenance_request mr ON d.DepartmentID = mr.departmant_ID
+LEFT JOIN 
+    worked w ON t.team_ID = w.team_ID
+LEFT JOIN 
+    maintenance_report r ON w.report_ID = r.report_ID
+LEFT JOIN 
+    used u ON r.report_ID = u.report_ID
+LEFT JOIN 
+    equipment eq ON u.equipment_ID = eq.equipment_ID;
+
+--query 2.1
+
+SELECT 
+    et.EmployeeID, 
+    et.FirstName, 
+    et.LastName, 
+    et.team_ID, 
+    et.team_name, 
+    et.speciality
+FROM 
+    EmployeeTeamDetails et
+WHERE 
+    et.team_ID IS NOT NULL;
+
+--query 2.2
+
+SELECT 
+    maintenance_request_ID,
+    priority,
+    maintenance_request_description,
+    DepartmentName,
+    DateEstablished
+FROM 
+    EmployeeTeamDetails
+WHERE 
+    maintenance_request_ID IS NOT NULL
+ORDER BY 
+    priority DESC;
